@@ -3,5 +3,5 @@
 make clean 2>/dev/null
 make distclean 2>/dev/null
 git clean -dfx
-git commit -a
+git commit -a || true
 
