@@ -10,6 +10,7 @@ fi
 make clean 2>/dev/null
 make distclean 2>/dev/null
 git commit -a
+git clean -dfx
 git push origin "$curbranch"
 git pull origin "$curbranch"
 git fetch
