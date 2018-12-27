@@ -30,8 +30,8 @@ Kernel configured for up to 8 processors.
 Processor type: x86_64h (Intel x86-64h Haswell)
 Processors active: 0 1 2 3 4 5 6 7
 Primary memory available: 8.00 gigabytes
-Default processor set: 265 tasks, 933 threads, 8 processors
-Load average: 2.28, Mach factor: 5.71
+Default processor set: 262 tasks, 919 threads, 8 processors
+Load average: 1.79, Mach factor: 6.19
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -886,7 +886,7 @@ configure:17474: checking for _strrev
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__strrev", referenced from:
-      _main in conftest-a4afc2.o
+      _main in conftest-999ad7.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -993,7 +993,7 @@ configure:17474: checking for _strupr
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__strupr", referenced from:
-      _main in conftest-73bece.o
+      _main in conftest-7013f7.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -1100,7 +1100,7 @@ configure:17474: checking for _strlwr
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__strlwr", referenced from:
-      _main in conftest-6536d5.o
+      _main in conftest-348e81.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -1234,7 +1234,7 @@ configure:17474: checking for itoa
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_itoa", referenced from:
-      _main in conftest-dc9d10.o
+      _main in conftest-c72710.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -1344,7 +1344,7 @@ configure:17474: checking for _ltoa
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__ltoa", referenced from:
-      _main in conftest-d48b9d.o
+      _main in conftest-9c112a.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -1454,7 +1454,7 @@ configure:17474: checking for _uitoa
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__uitoa", referenced from:
-      _main in conftest-27898a.o
+      _main in conftest-7418fe.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -1564,7 +1564,7 @@ configure:17474: checking for _ultoa
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__ultoa", referenced from:
-      _main in conftest-420df0.o
+      _main in conftest-1e6574.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -1682,7 +1682,7 @@ configure:17474: checking for _i64toa
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__i64toa", referenced from:
-      _main in conftest-e2e6c9.o
+      _main in conftest-885f1b.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -1794,7 +1794,7 @@ configure:17474: checking for _ui64toa
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__ui64toa", referenced from:
-      _main in conftest-3d0bbc.o
+      _main in conftest-b2aa84.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -1940,7 +1940,7 @@ configure:17474: checking for _stricmp
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__stricmp", referenced from:
-      _main in conftest-fca3ed.o
+      _main in conftest-99fd5a.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -2067,7 +2067,7 @@ configure:17474: checking for _strnicmp
 configure:17530: gcc -o conftest -g -O2 -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1  -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1   conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__strnicmp", referenced from:
-      _main in conftest-0d1af7.o
+      _main in conftest-9bd894.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:17536: $? = 1
@@ -2396,7 +2396,7 @@ conftest.c:98:19: warning: implicit declaration of function 'sem_timedwait' is i
 1 warning generated.
 Undefined symbols for architecture x86_64:
   "_sem_timedwait", referenced from:
-      _main in conftest-944524.o
+      _main in conftest-b69794.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:27272: $? = 1

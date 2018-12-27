@@ -56,7 +56,7 @@
 #define main	SDL_main
 
 /** The prototype for the application's main() function */
-extern C_LINKAGE int SDL_main(int argc, char *argv[]);
+extern C_LINKAGE int SDL_main(int argc, char *argv[]) SDL_MAIN_NOEXCEPT;
 
 
 /** @name From the SDL library code -- needed for registering the app on Win32 */
