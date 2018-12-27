@@ -27,7 +27,7 @@
 
 
 
-VPATH = /Users/joncampbell/src/dosbox-x/vs2015/libpng
+VPATH = /Users/joncampbell/src/dosbox-svn/vs2015/libpng
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
     false; \
@@ -529,23 +529,23 @@ distcleancheck_listfiles = find . -type f -print
 
 #distribute headers in /usr/include/libpng/*
 pkgincludedir = $(includedir)/$(PNGLIB_BASENAME)
-ACLOCAL = ${SHELL} /Users/joncampbell/src/dosbox-x/vs2015/libpng/missing aclocal-1.15
+ACLOCAL = ${SHELL} /Users/joncampbell/src/dosbox-svn/vs2015/libpng/missing aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
 AS = as
-AUTOCONF = ${SHELL} /Users/joncampbell/src/dosbox-x/vs2015/libpng/missing autoconf
-AUTOHEADER = ${SHELL} /Users/joncampbell/src/dosbox-x/vs2015/libpng/missing autoheader
-AUTOMAKE = ${SHELL} /Users/joncampbell/src/dosbox-x/vs2015/libpng/missing automake-1.15
+AUTOCONF = ${SHELL} /Users/joncampbell/src/dosbox-svn/vs2015/libpng/missing autoconf
+AUTOHEADER = ${SHELL} /Users/joncampbell/src/dosbox-svn/vs2015/libpng/missing autoheader
+AUTOMAKE = ${SHELL} /Users/joncampbell/src/dosbox-svn/vs2015/libpng/missing automake-1.15
 AWK = awk
 CC = gcc
 CCAS = gcc
 CCASDEPMODE = depmode=gcc3
-CCASFLAGS = -I/Users/joncampbell/src/dosbox-x/vs2015/zlib/linux-host/include 
+CCASFLAGS = -I/Users/joncampbell/src/dosbox-svn/vs2015/zlib/linux-host/include 
 CCDEPMODE = depmode=gcc3
-CFLAGS = -I/Users/joncampbell/src/dosbox-x/vs2015/zlib/linux-host/include 
+CFLAGS = -I/Users/joncampbell/src/dosbox-svn/vs2015/zlib/linux-host/include 
 CPP = gcc -E
-CPPFLAGS = -I/Users/joncampbell/src/dosbox-x/vs2015/zlib/linux-host/include 
+CPPFLAGS = -I/Users/joncampbell/src/dosbox-svn/vs2015/zlib/linux-host/include 
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -572,7 +572,7 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /Library/Developer/CommandLineTools/usr/bin/ld
-LDFLAGS = -L/Users/joncampbell/src/dosbox-x/vs2015/zlib/linux-host/lib 
+LDFLAGS = -L/Users/joncampbell/src/dosbox-svn/vs2015/zlib/linux-host/lib 
 LIBOBJS = 
 LIBS = -lz 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
@@ -581,9 +581,9 @@ LN_S = ln -s
 LTLIBOBJS = 
 LT_SYS_LIBRARY_PATH = 
 MAINT = #
-MAKEINFO = ${SHELL} /Users/joncampbell/src/dosbox-x/vs2015/libpng/missing makeinfo
+MAKEINFO = ${SHELL} /Users/joncampbell/src/dosbox-svn/vs2015/libpng/missing makeinfo
 MANIFEST_TOOL = :
-MKDIR_P = /Users/joncampbell/src/dosbox-x/vs2015/libpng/install-sh -c -d
+MKDIR_P = /Users/joncampbell/src/dosbox-svn/vs2015/libpng/install-sh -c -d
 NM = /usr/bin/nm -B
 NMEDIT = nmedit
 OBJDUMP = objdump
@@ -616,10 +616,10 @@ SHELL = /bin/sh
 STRIP = strip
 SYMBOL_PREFIX = 
 VERSION = 1.6.34
-abs_builddir = /Users/joncampbell/src/dosbox-x/vs2015/libpng/linux-build
-abs_srcdir = /Users/joncampbell/src/dosbox-x/vs2015/libpng
-abs_top_builddir = /Users/joncampbell/src/dosbox-x/vs2015/libpng/linux-build
-abs_top_srcdir = /Users/joncampbell/src/dosbox-x/vs2015/libpng
+abs_builddir = /Users/joncampbell/src/dosbox-svn/vs2015/libpng/linux-build
+abs_srcdir = /Users/joncampbell/src/dosbox-svn/vs2015/libpng
+abs_top_builddir = /Users/joncampbell/src/dosbox-svn/vs2015/libpng/linux-build
+abs_top_srcdir = /Users/joncampbell/src/dosbox-svn/vs2015/libpng
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -651,7 +651,7 @@ host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/joncampbell/src/dosbox-x/vs2015/libpng/install-sh
+install_sh = ${SHELL} /Users/joncampbell/src/dosbox-svn/vs2015/libpng/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -664,17 +664,17 @@ pdfdir = ${docdir}
 # pkg-config stuff, note that libpng.pc is always required in order
 # to get the correct library
 pkgconfigdir = ${libdir}/pkgconfig
-prefix = /Users/joncampbell/src/dosbox-x/vs2015/libpng/linux-host
+prefix = /Users/joncampbell/src/dosbox-svn/vs2015/libpng/linux-host
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
-srcdir = /Users/joncampbell/src/dosbox-x/vs2015/libpng
+srcdir = /Users/joncampbell/src/dosbox-svn/vs2015/libpng
 sysconfdir = ${prefix}/etc
 target_alias = 
 top_build_prefix = 
 top_builddir = .
-top_srcdir = /Users/joncampbell/src/dosbox-x/vs2015/libpng
+top_srcdir = /Users/joncampbell/src/dosbox-svn/vs2015/libpng
 PNGLIB_BASENAME = libpng16
 ACLOCAL_AMFLAGS = -I scripts
 

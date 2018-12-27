@@ -1,6 +1,6 @@
 #!/bin/sh
 
-prefix=/Users/joncampbell/src/dosbox-x/vs2015/sdl/linux-host
+prefix=/Users/joncampbell/src/dosbox-svn/vs2015/sdl/linux-host
 exec_prefix=${prefix}
 exec_prefix_set=no
 libdir=${exec_prefix}/lib

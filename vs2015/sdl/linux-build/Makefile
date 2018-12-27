@@ -1,10 +1,10 @@
 # Makefile to build and install the SDL library
 
 top_builddir = .
-srcdir  = /Users/joncampbell/src/dosbox-x/vs2015/sdl
+srcdir  = /Users/joncampbell/src/dosbox-svn/vs2015/sdl
 objects = build
 depend	= build-deps
-prefix = /Users/joncampbell/src/dosbox-x/vs2015/sdl/linux-host
+prefix = /Users/joncampbell/src/dosbox-svn/vs2015/sdl/linux-host
 exec_prefix = ${prefix}
 bindir	= ${exec_prefix}/bin
 libdir  = ${exec_prefix}/lib
@@ -12,7 +12,7 @@ includedir = ${prefix}/include
 datarootdir = ${prefix}/share
 datadir	= ${datarootdir}
 mandir	= ${datarootdir}/man
-auxdir	= /Users/joncampbell/src/dosbox-x/vs2015/sdl/build-scripts
+auxdir	= /Users/joncampbell/src/dosbox-svn/vs2015/sdl/build-scripts
 distpath = $(srcdir)/..
 distdir = SDL-1.2.15
 distfile = $(distdir).tar.gz
@@ -20,9 +20,9 @@ distfile = $(distdir).tar.gz
 
 SHELL	= /bin/sh
 CC      = gcc
-INCLUDE = -Iinclude -I/Users/joncampbell/src/dosbox-x/vs2015/sdl/include
+INCLUDE = -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include
 CFLAGS  = -g -O2 
-EXTRA_CFLAGS = -Iinclude -I/Users/joncampbell/src/dosbox-x/vs2015/sdl/include -D_GNU_SOURCE=1 -DTARGET_API_MAC_CARBON -DTARGET_API_MAC_OSX -fvisibility=hidden -D_THREAD_SAFE -force_cpusubtype_ALL -fpascal-strings -Wall
+EXTRA_CFLAGS = -Iinclude -I/Users/joncampbell/src/dosbox-svn/vs2015/sdl/include -D_GNU_SOURCE=1 -DTARGET_API_MAC_CARBON -DTARGET_API_MAC_OSX -fvisibility=hidden -D_THREAD_SAFE -force_cpusubtype_ALL -fpascal-strings -Wall
 LDFLAGS = 
 EXTRA_LDFLAGS =  -Wl,-framework,OpenGL  -Wl,-framework,Cocoa -Wl,-framework,ApplicationServices -Wl,-framework,Carbon -Wl,-framework,AudioToolbox -Wl,-framework,AudioUnit -Wl,-framework,IOKit
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
@@ -33,11 +33,11 @@ RANLIB	= ranlib
 WINDRES	= :
 
 TARGET  = libSDL.la
-SOURCES =  /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/audio/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/cdrom/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/cpuinfo/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/events/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/file/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/stdlib/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/thread/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/timer/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/video/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/joystick/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/video/dummy/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/audio/disk/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/audio/dummy/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/loadso/dlopen/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/video/quartz/*.m /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/thread/pthread/SDL_systhread.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/thread/pthread/SDL_syssem.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/thread/pthread/SDL_sysmutex.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/thread/pthread/SDL_syscond.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/audio/macosx/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/joystick/darwin/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/cdrom/macosx/*.c /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/timer/unix/*.c
+SOURCES =  /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/audio/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/cdrom/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/cpuinfo/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/events/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/file/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/stdlib/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/thread/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/timer/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/video/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/joystick/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/video/dummy/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/audio/disk/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/audio/dummy/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/loadso/dlopen/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/video/quartz/*.m /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/thread/pthread/SDL_systhread.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/thread/pthread/SDL_syssem.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/thread/pthread/SDL_sysmutex.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/thread/pthread/SDL_syscond.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/audio/macosx/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/joystick/darwin/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/cdrom/macosx/*.c /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/timer/unix/*.c
 OBJECTS = $(objects)/SDL.lo $(objects)/SDL_error.lo $(objects)/SDL_fatal.lo $(objects)/SDL_audio.lo $(objects)/SDL_audiocvt.lo $(objects)/SDL_audiodev.lo $(objects)/SDL_mixer.lo $(objects)/SDL_mixer_MMX.lo $(objects)/SDL_mixer_MMX_VC.lo $(objects)/SDL_mixer_m68k.lo $(objects)/SDL_wave.lo $(objects)/SDL_cdrom.lo $(objects)/SDL_cpuinfo.lo $(objects)/SDL_active.lo $(objects)/SDL_events.lo $(objects)/SDL_expose.lo $(objects)/SDL_keyboard.lo $(objects)/SDL_mouse.lo $(objects)/SDL_quit.lo $(objects)/SDL_resize.lo $(objects)/SDL_rwops.lo $(objects)/SDL_getenv.lo $(objects)/SDL_iconv.lo $(objects)/SDL_malloc.lo $(objects)/SDL_qsort.lo $(objects)/SDL_stdlib.lo $(objects)/SDL_string.lo $(objects)/SDL_thread.lo $(objects)/SDL_timer.lo $(objects)/SDL_RLEaccel.lo $(objects)/SDL_blit.lo $(objects)/SDL_blit_0.lo $(objects)/SDL_blit_1.lo $(objects)/SDL_blit_A.lo $(objects)/SDL_blit_N.lo $(objects)/SDL_bmp.lo $(objects)/SDL_cursor.lo $(objects)/SDL_gamma.lo $(objects)/SDL_pixels.lo $(objects)/SDL_stretch.lo $(objects)/SDL_surface.lo $(objects)/SDL_video.lo $(objects)/SDL_yuv.lo $(objects)/SDL_yuv_mmx.lo $(objects)/SDL_yuv_sw.lo $(objects)/SDL_joystick.lo $(objects)/SDL_nullevents.lo $(objects)/SDL_nullmouse.lo $(objects)/SDL_nullvideo.lo $(objects)/SDL_diskaudio.lo $(objects)/SDL_dummyaudio.lo $(objects)/SDL_sysloadso.lo $(objects)/SDL_QuartzEvents.lo $(objects)/SDL_QuartzGL.lo $(objects)/SDL_QuartzVideo.lo $(objects)/SDL_QuartzWM.lo $(objects)/SDL_QuartzWindow.lo $(objects)/SDL_systhread.lo $(objects)/SDL_syssem.lo $(objects)/SDL_sysmutex.lo $(objects)/SDL_syscond.lo $(objects)/SDL_coreaudio.lo $(objects)/SDL_sysjoystick.lo $(objects)/AudioFilePlayer.lo $(objects)/AudioFileReaderThread.lo $(objects)/CDPlayer.lo $(objects)/SDLOSXCAGuard.lo $(objects)/SDL_syscdrom.lo $(objects)/SDL_systimer.lo
 
 SDLMAIN_TARGET = libSDLmain.la
-SDLMAIN_SOURCES = /Users/joncampbell/src/dosbox-x/vs2015/sdl/src/main/macosx/*.m
+SDLMAIN_SOURCES = /Users/joncampbell/src/dosbox-svn/vs2015/sdl/src/main/macosx/*.m
 SDLMAIN_OBJECTS = $(objects)/SDLMain.lo
 SDLMAIN_LDFLAGS = -static
 

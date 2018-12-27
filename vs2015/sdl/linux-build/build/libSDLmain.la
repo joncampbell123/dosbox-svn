@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/Users/joncampbell/src/dosbox-x/vs2015/sdl/linux-host/lib'
+libdir='/Users/joncampbell/src/dosbox-svn/vs2015/sdl/linux-host/lib'
