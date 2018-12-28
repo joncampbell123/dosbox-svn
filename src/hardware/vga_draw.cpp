@@ -344,7 +344,7 @@ static Bit8u * VGA_Draw_LIN32_Line_HWMouse(Bitu vidstart, Bitu /*line*/) {
     Bitu i;
 
     for (i=0;i < vga.draw.width;i++)
-        ((uint32_t*)TempLine)[i] = guest_bgr_to_macosx_rgba((((uint32_t*)(vga.draw.linear_base+offset))[i]));
+        ((Bit32u*)TempLine)[i] = guest_bgr_to_macosx_rgba((((Bit32u*)(vga.draw.linear_base+offset))[i]));
 
     return TempLine;
 #else
