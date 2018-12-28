@@ -833,6 +833,7 @@ static void VGA_VerticalTimer(Bitu /*val*/) {
 		PIC_AddEvent(VGA_Other_VertInterrupt, (float)vga.draw.delay.vrend, 0);
 		// fall-through
 	case MCH_CGA:
+    case MCH_MDA:
 	case MCH_HERC:
 		// MC6845-powered graphics: Loading the display start latch happens somewhere
 		// after vsync off and before first visible scanline, so probably here
@@ -917,7 +918,7 @@ static void VGA_VerticalTimer(Bitu /*val*/) {
 		// fall-through
 	case M_TANDY_TEXT:
 	case M_HERC_TEXT:
-		if (machine==MCH_HERC) vga.draw.linear_mask = 0xfff; // 1 page
+		if (machine==MCH_HERC || machine==MCH_MDA) vga.draw.linear_mask = 0xfff; // 1 page
 		else if (IS_EGAVGA_ARCH) vga.draw.linear_mask = 0x7fff; // 8 pages
 		else vga.draw.linear_mask = 0x3fff; // CGA, Tandy 4 pages
 		vga.draw.cursor.address=vga.config.cursor_start*2;
@@ -1208,6 +1209,7 @@ void VGA_SetupDrawing(Bitu /*val*/) {
 		case TANDY_ARCH_CASE:
 			clock=((vga.tandy.mode_control & 1) ? 14318180 : (14318180/2))/8;
 			break;
+        case MCH_MDA:
 		case MCH_HERC:
 			if (vga.herc.mode_control & 0x2) clock=16000000/16;
 			else clock=16000000/8;

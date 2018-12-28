@@ -1262,6 +1262,7 @@ public:
 #endif
 		switch (machine) {
 		case MCH_HERC:
+		case MCH_MDA:
 			//Startup monochrome
 			config|=0x30;
 			break;
