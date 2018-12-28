@@ -164,6 +164,16 @@ static Bit8u * VGA_Draw_Changes_Line(Bitu vidstart, Bitu line) {
 
 #endif
 
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
+static inline Bit32u guest_bgr_to_macosx_rgba(const Bit32u x) {
+    /* guest: XRGB      X   R   G   B
+     * host:  RGBX      B   G   R   X */
+    return      ((x & 0x000000FFU) << 24U) +      /* BBxxxxxx */
+                ((x & 0x0000FF00U) <<  8U) +      /* xxGGxxxx */
+                ((x & 0x00FF0000U) >>  8U);       /* xxxxRRxx */
+}
+#endif
+
 static Bit8u * VGA_Draw_Linear_Line(Bitu vidstart, Bitu /*line*/) {
 	Bitu offset = vidstart & vga.draw.linear_mask;
 	Bit8u* ret = &vga.draw.linear_base[offset];
