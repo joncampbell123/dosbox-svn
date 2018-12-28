@@ -5,6 +5,13 @@
 # and just autoregen.
 ./autogen.sh || exit 1
 
+# fix
+chmod +x vs2015/sdl/build-scripts/strip_fPIC.sh
+
+# prefer to compile against our own copy of SDL 1.x
+echo Compiling our internal SDL 1.x
+(cd vs2015/sdl && ./build-dosbox.sh) || exit 1
+
 # now compile ourself
 echo Compiling DOSBox-X
 chmod +x configure
