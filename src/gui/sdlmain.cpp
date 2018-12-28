@@ -1020,7 +1020,14 @@ void GFX_EndUpdate( const Bit16u *changedLines ) {
 					Bitu height = changedLines[index];
 					glTexSubImage2D(GL_TEXTURE_2D, 0, 0, y,
 						sdl.draw.width, height, GL_BGRA_EXT,
-						GL_UNSIGNED_INT_8_8_8_8_REV, pixels );
+#if defined (MACOSX)
+                        // needed for proper looking graphics on macOS 10.12, 10.13
+                        GL_UNSIGNED_INT_8_8_8_8,
+#else
+                        // works on Linux
+                        GL_UNSIGNED_INT_8_8_8_8_REV,
+#endif
+                        pixels );
 					y += height;
 				}
 				index++;
