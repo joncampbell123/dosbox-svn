@@ -329,6 +329,15 @@ static Bit8u * VGA_Draw_LIN16_Line_HWMouse(Bitu vidstart, Bitu /*line*/) {
 }
 
 static Bit8u * VGA_Draw_LIN32_Line_HWMouse(Bitu vidstart, Bitu /*line*/) {
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
+    Bitu offset = vidstart & vga.draw.linear_mask;
+    Bitu i;
+
+    for (i=0;i < vga.draw.width;i++)
+        ((uint32_t*)TempLine)[i] = guest_bgr_to_macosx_rgba((((uint32_t*)(vga.draw.linear_base+offset))[i]));
+
+    return TempLine;
+#else
 	if (!svga.hardware_cursor_active || !svga.hardware_cursor_active())
 		return &vga.mem.linear[vidstart];
 
@@ -364,6 +373,7 @@ static Bit8u * VGA_Draw_LIN32_Line_HWMouse(Bitu vidstart, Bitu /*line*/) {
 		}
 		return TempLine;
 	}
+#endif
 }
 
 static const Bit8u* VGA_Text_Memwrap(Bitu vidstart) {
@@ -1026,8 +1036,16 @@ void VGA_ActivateHardwareCursor(void) {
 			VGA_DrawLine=VGA_Draw_VGA_Line_HWMouse;
 		}
 	} else {
-		VGA_DrawLine=VGA_Draw_Linear_Line;
-	}
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
+        if (vga.mode == M_LIN32) {
+            VGA_DrawLine=VGA_Draw_LIN32_Line_HWMouse;
+        }
+        else
+#endif
+        {
+            VGA_DrawLine=VGA_Draw_Linear_Line;
+        }
+    }
 }
 
 void VGA_SetupDrawing(Bitu /*val*/) {
