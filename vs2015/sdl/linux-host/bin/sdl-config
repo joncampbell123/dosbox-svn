@@ -1,6 +1,6 @@
 #!/bin/sh
 
-prefix=/Users/joncampbell/src/dosbox-svn/vs2015/sdl/linux-host
+prefix=/usr/src/dosbox-svn/vs2015/sdl/linux-host
 exec_prefix=${prefix}
 exec_prefix_set=no
 libdir=${exec_prefix}/lib
@@ -42,14 +42,14 @@ while test $# -gt 0; do
       echo 1.2.15
       ;;
     --cflags)
-      echo -I${prefix}/include/SDL -D_GNU_SOURCE=1 -D_THREAD_SAFE
+      echo -I${prefix}/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
       ;;
 #    --libs)
-#      echo -L${exec_prefix}/lib  -lSDLmain -lSDL   -Wl,-framework,Cocoa
+#      echo -L${exec_prefix}/lib -Wl,-rpath,${libdir} -lSDL  -lpthread
 #      ;;
 #    --static-libs)
     --libs|--static-libs)
-      echo -L${exec_prefix}/lib  ${libdir}/libSDLmain.a ${libdir}/libSDL.a  -Wl,-framework,OpenGL  -Wl,-framework,Cocoa -Wl,-framework,ApplicationServices -Wl,-framework,Carbon -Wl,-framework,AudioToolbox -Wl,-framework,AudioUnit -Wl,-framework,IOKit
+      echo -L${exec_prefix}/lib -Wl,-rpath,${libdir} -lSDL  -lpthread  -lm -ldl  -lX11 -lXext -lpthread
       ;;
     *)
       echo "${usage}" 1>&2

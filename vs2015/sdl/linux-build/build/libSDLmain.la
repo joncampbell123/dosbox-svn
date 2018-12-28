@@ -14,10 +14,10 @@ library_names=''
 old_library='libSDLmain.a'
 
 # Linker flags that can not go in dependency_libs.
-inherited_linker_flags=' '
+inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=''
+dependency_libs=' -lm -ldl -lX11 -lXext -lpthread'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/Users/joncampbell/src/dosbox-svn/vs2015/sdl/linux-host/lib'
+libdir='/usr/src/dosbox-svn/vs2015/sdl/linux-host/lib'
