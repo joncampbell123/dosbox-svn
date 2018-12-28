@@ -1080,9 +1080,13 @@ Bitu GFX_GetRGB(Bit8u red,Bit8u green,Bit8u blue) {
 #endif
 		}
 	case SCREEN_OPENGL:
-//		return ((red << 0) | (green << 8) | (blue << 16)) | (255 << 24);
-		//USE BGRA
+# if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
+        //USE BGRA
+		return ((blue << 24) | (green << 16) | (red << 8)) | (255 << 0);
+# else
+		//USE ARGB
 		return ((blue << 0) | (green << 8) | (red << 16)) | (255 << 24);
+# endif
 	}
 	return 0;
 }
