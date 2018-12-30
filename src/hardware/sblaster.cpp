@@ -1579,13 +1579,10 @@ static void SBLASTER_CallBack(Bitu len) {
 		sb.chan->AddSilence();
 		break;
 	case MODE_DAC:
-//		GenerateDACSound(len);
-//		break;
 		if (!sb.dac.used) {
 			sb.mode=MODE_NONE;
 			return;
 		}
-//		sb.chan->AddStretched(sb.dac.used,sb.dac.data);     // TODO: DOSBox-X Sound Blaster code uses better DAC emulation
 		sb.dac.used=0;
 		break;
 	case MODE_DMA:
