@@ -109,7 +109,6 @@ static struct {
 	struct mixedFraction samples_rendered_ms;
 	bool prebuffer_wait;
 	Bitu prebuffer_samples;
-	bool mute;
 } mixer;
 
 Bit8u MixTemp[MIXER_BUFSIZE];
@@ -700,13 +699,6 @@ static void MIXER_CallBack(void * userdata, Uint8 *stream, int len) {
     int remains;
     Bit32s *in;
 
-    if (mixer.mute) {
-        if ((CaptureState & (CAPTURE_WAVE|CAPTURE_VIDEO)) != 0)
-            mixer.work_out = mixer.work_in;
-        else
-            mixer.work_out = mixer.work_in = 0;
-    }
-
     if (mixer.prebuffer_wait) {
         remains = (int)mixer.work_in - (int)mixer.work_out;
         if (remains < 0) remains += (int)mixer.work_wrap;
@@ -716,7 +708,7 @@ static void MIXER_CallBack(void * userdata, Uint8 *stream, int len) {
             mixer.prebuffer_wait = false;
     }
 
-    if (!mixer.prebuffer_wait && !mixer.mute) {
+    if (!mixer.prebuffer_wait) {
         in = &mixer.work[mixer.work_out][0];
         while (need > 0) {
             if (mixer.work_out == mixer.work_in) break;
@@ -861,7 +853,6 @@ void MIXER_Init(Section* sec) {
 	mixer.freq=section->Get_int("rate");
 	mixer.nosound=section->Get_bool("nosound");
 	mixer.blocksize=section->Get_int("blocksize");
-	mixer.mute=false;
 
 	/* Initialize the internal stuff */
 	mixer.prebuffer_samples=0;
