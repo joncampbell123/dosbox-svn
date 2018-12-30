@@ -765,30 +765,30 @@ static void MIXER_Stop(Section* sec) {
 
 class MIXER : public Program {
 public:
-    void MakeVolume(char * scan,float & vol0,float & vol1) {
-        Bitu w=0;
-        bool db=(toupper(*scan)=='D');
-        if (db) scan++;
-        while (*scan) {
-            if (*scan==':') {
-                ++scan;w=1;
-            }
-            char * before=scan;
-            float val=(float)strtod(scan,&scan);
-            if (before==scan) {
-                ++scan;continue;
-            }
-            if (!db) val/=100;
-            else val=powf(10.0f,(float)val/20.0f);
-            if (val<0) val=1.0f;
-            if (!w) {
-                vol0=val;
-            } else {
-                vol1=val;
-            }
-        }
-        if (!w) vol1=vol0;
-    }
+	void MakeVolume(char * scan,float & vol0,float & vol1) {
+		Bitu w=0;
+		bool db=(toupper(*scan)=='D');
+		if (db) scan++;
+		while (*scan) {
+			if (*scan==':') {
+				++scan;w=1;
+			}
+			char * before=scan;
+			float val=(float)strtod(scan,&scan);
+			if (before==scan) {
+				++scan;continue;
+			}
+			if (!db) val/=100;
+			else val=powf(10.0f,(float)val/20.0f);
+			if (val<0) val=1.0f;
+			if (!w) {
+				vol0=val;
+			} else {
+				vol1=val;
+			}
+		}
+		if (!w) vol1=vol0;
+	}
 
 	void Run(void) {
 		if(cmd->FindExist("/LISTMIDI")) {
