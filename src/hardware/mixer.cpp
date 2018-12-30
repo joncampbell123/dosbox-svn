@@ -128,15 +128,15 @@ inline void MixerChannel::updateSlew(void) {
 }
 
 MixerChannel * MIXER_AddChannel(MIXER_Handler handler,Bitu freq,const char * name) {
-    MixerChannel * chan=new MixerChannel();
-    chan->scale = 1.0;
-    chan->freq_fslew = 0;
-    chan->freq_nslew_want = 0;
-    chan->freq_nslew = 0;
-    chan->last_sample_write = 0;
-    chan->current_loaded = false;
-    chan->handler=handler;
-    chan->name=name;
+	MixerChannel * chan=new MixerChannel();
+	chan->scale = 1.0;
+	chan->freq_fslew = 0;
+	chan->freq_nslew_want = 0;
+	chan->freq_nslew = 0;
+	chan->last_sample_write = 0;
+	chan->current_loaded = false;
+	chan->handler=handler;
+	chan->name=name;
     chan->msbuffer_i = 0;
     chan->msbuffer_o = 0;
     chan->freq_n = chan->freq_d = 1;
@@ -152,40 +152,40 @@ MixerChannel * MIXER_AddChannel(MIXER_Handler handler,Bitu freq,const char * nam
     chan->lowpass_on_out = false;
     chan->freq_d_orig = 1;
     chan->freq_f = 0;
-    chan->SetFreq(freq);
-    chan->next=mixer.channels;
-    chan->SetVolume(1,1);
-    chan->enabled=false;
-    chan->interpolate = false;
+	chan->SetFreq(freq);
+	chan->next=mixer.channels;
+	chan->SetVolume(1,1);
+	chan->enabled=false;
+	chan->interpolate = false;
     chan->last[0] = chan->last[1] = 0;
     chan->delta[0] = chan->delta[1] = 0;
     chan->current[0] = chan->current[1] = 0;
 
-    mixer.channels=chan;
-    return chan;
+	mixer.channels=chan;
+	return chan;
 }
 
 MixerChannel * MIXER_FindChannel(const char * name) {
-    MixerChannel * chan=mixer.channels;
-    while (chan) {
-        if (!strcasecmp(chan->name,name)) break;
-        chan=chan->next;
-    }
-    return chan;
+	MixerChannel * chan=mixer.channels;
+	while (chan) {
+		if (!strcasecmp(chan->name,name)) break;
+		chan=chan->next;
+	}
+	return chan;
 }
 
 void MIXER_DelChannel(MixerChannel* delchan) {
-    MixerChannel * chan=mixer.channels;
-    MixerChannel * * where=&mixer.channels;
-    while (chan) {
-        if (chan==delchan) {
-            *where=chan->next;
-            delete delchan;
-            return;
-        }
-        where=&chan->next;
-        chan=chan->next;
-    }
+	MixerChannel * chan=mixer.channels;
+	MixerChannel * * where=&mixer.channels;
+	while (chan) {
+		if (chan==delchan) {
+			*where=chan->next;
+			delete delchan;
+			return;
+		}
+		where=&chan->next;
+		chan=chan->next;
+	}
 }
 
 void MixerChannel::UpdateVolume(void) {
@@ -194,20 +194,20 @@ void MixerChannel::UpdateVolume(void) {
 }
 
 void MixerChannel::SetVolume(float _left,float _right) {
-    volmain[0]=_left;
-    volmain[1]=_right;
-    UpdateVolume();
+	volmain[0]=_left;
+	volmain[1]=_right;
+	UpdateVolume();
 }
 
 void MixerChannel::SetScale( float f ) {
-    scale = f;
-    UpdateVolume();
+	scale = f;
+	UpdateVolume();
 }
 
 void MixerChannel::Enable(bool _yesno) {
-    if (_yesno==enabled) return;
-    enabled=_yesno;
-    if (!enabled) freq_f=0;
+	if (_yesno==enabled) return;
+	enabled=_yesno;
+	if (!enabled) freq_f=0;
 }
 
 void MixerChannel::lowpassUpdate() {
@@ -546,52 +546,52 @@ inline void MixerChannel::AddSamples(Bitu len, const Type* data) {
 }
 
 void MixerChannel::AddSamples_m8(Bitu len, const Bit8u * data) {
-    AddSamples<Bit8u,false,false,true>(len,data);
+	AddSamples<Bit8u,false,false,true>(len,data);
 }
 void MixerChannel::AddSamples_s8(Bitu len,const Bit8u * data) {
-    AddSamples<Bit8u,true,false,true>(len,data);
+	AddSamples<Bit8u,true,false,true>(len,data);
 }
 void MixerChannel::AddSamples_m8s(Bitu len,const Bit8s * data) {
-    AddSamples<Bit8s,false,true,true>(len,data);
+	AddSamples<Bit8s,false,true,true>(len,data);
 }
 void MixerChannel::AddSamples_s8s(Bitu len,const Bit8s * data) {
-    AddSamples<Bit8s,true,true,true>(len,data);
+	AddSamples<Bit8s,true,true,true>(len,data);
 }
 void MixerChannel::AddSamples_m16(Bitu len,const Bit16s * data) {
-    AddSamples<Bit16s,false,true,true>(len,data);
+	AddSamples<Bit16s,false,true,true>(len,data);
 }
 void MixerChannel::AddSamples_s16(Bitu len,const Bit16s * data) {
-    AddSamples<Bit16s,true,true,true>(len,data);
+	AddSamples<Bit16s,true,true,true>(len,data);
 }
 void MixerChannel::AddSamples_m16u(Bitu len,const Bit16u * data) {
-    AddSamples<Bit16u,false,false,true>(len,data);
+	AddSamples<Bit16u,false,false,true>(len,data);
 }
 void MixerChannel::AddSamples_s16u(Bitu len,const Bit16u * data) {
-    AddSamples<Bit16u,true,false,true>(len,data);
+	AddSamples<Bit16u,true,false,true>(len,data);
 }
 void MixerChannel::AddSamples_m32(Bitu len,const Bit32s * data) {
-    AddSamples<Bit32s,false,true,true>(len,data);
+	AddSamples<Bit32s,false,true,true>(len,data);
 }
 void MixerChannel::AddSamples_s32(Bitu len,const Bit32s * data) {
-    AddSamples<Bit32s,true,true,true>(len,data);
+	AddSamples<Bit32s,true,true,true>(len,data);
 }
 void MixerChannel::AddSamples_m16_nonnative(Bitu len,const Bit16s * data) {
-    AddSamples<Bit16s,false,true,false>(len,data);
+	AddSamples<Bit16s,false,true,false>(len,data);
 }
 void MixerChannel::AddSamples_s16_nonnative(Bitu len,const Bit16s * data) {
-    AddSamples<Bit16s,true,true,false>(len,data);
+	AddSamples<Bit16s,true,true,false>(len,data);
 }
 void MixerChannel::AddSamples_m16u_nonnative(Bitu len,const Bit16u * data) {
-    AddSamples<Bit16u,false,false,false>(len,data);
+	AddSamples<Bit16u,false,false,false>(len,data);
 }
 void MixerChannel::AddSamples_s16u_nonnative(Bitu len,const Bit16u * data) {
-    AddSamples<Bit16u,true,false,false>(len,data);
+	AddSamples<Bit16u,true,false,false>(len,data);
 }
 void MixerChannel::AddSamples_m32_nonnative(Bitu len,const Bit32s * data) {
-    AddSamples<Bit32s,false,true,false>(len,data);
+	AddSamples<Bit32s,false,true,false>(len,data);
 }
 void MixerChannel::AddSamples_s32_nonnative(Bitu len,const Bit32s * data) {
-    AddSamples<Bit32s,true,true,false>(len,data);
+	AddSamples<Bit32s,true,true,false>(len,data);
 }
 
 extern bool ticksLocked;
@@ -790,117 +790,117 @@ public:
         if (!w) vol1=vol0;
     }
 
-    void Run(void) {
-        if(cmd->FindExist("/LISTMIDI")) {
-            ListMidi();
-            return;
-        }
-        if (cmd->FindString("MASTER",temp_line,false)) {
-            MakeVolume((char *)temp_line.c_str(),mixer.mastervol[0],mixer.mastervol[1]);
-        }
-        if (cmd->FindString("RECORD",temp_line,false)) {
-            MakeVolume((char *)temp_line.c_str(),mixer.recordvol[0],mixer.recordvol[1]);
-        }
-        MixerChannel * chan=mixer.channels;
-        while (chan) {
-            if (cmd->FindString(chan->name,temp_line,false)) {
-                MakeVolume((char *)temp_line.c_str(),chan->volmain[0],chan->volmain[1]);
-            }
-            chan->UpdateVolume();
-            chan=chan->next;
-        }
-        if (cmd->FindExist("/NOSHOW")) return;
-        chan=mixer.channels;
-        WriteOut("Channel  Main    Main(dB)\n");
-        ShowVolume("MASTER",mixer.mastervol[0],mixer.mastervol[1]);
-        ShowVolume("RECORD",mixer.recordvol[0],mixer.recordvol[1]);
-        for (chan=mixer.channels;chan;chan=chan->next) 
-            ShowVolume(chan->name,chan->volmain[0],chan->volmain[1]);
-    }
+	void Run(void) {
+		if(cmd->FindExist("/LISTMIDI")) {
+			ListMidi();
+			return;
+		}
+		if (cmd->FindString("MASTER",temp_line,false)) {
+			MakeVolume((char *)temp_line.c_str(),mixer.mastervol[0],mixer.mastervol[1]);
+		}
+		if (cmd->FindString("RECORD",temp_line,false)) {
+			MakeVolume((char *)temp_line.c_str(),mixer.recordvol[0],mixer.recordvol[1]);
+		}
+		MixerChannel * chan=mixer.channels;
+		while (chan) {
+			if (cmd->FindString(chan->name,temp_line,false)) {
+				MakeVolume((char *)temp_line.c_str(),chan->volmain[0],chan->volmain[1]);
+			}
+			chan->UpdateVolume();
+			chan=chan->next;
+		}
+		if (cmd->FindExist("/NOSHOW")) return;
+		chan=mixer.channels;
+		WriteOut("Channel  Main    Main(dB)\n");
+		ShowVolume("MASTER",mixer.mastervol[0],mixer.mastervol[1]);
+		ShowVolume("RECORD",mixer.recordvol[0],mixer.recordvol[1]);
+		for (chan=mixer.channels;chan;chan=chan->next)
+			ShowVolume(chan->name,chan->volmain[0],chan->volmain[1]);
+	}
 private:
-    void ShowVolume(const char * name,float vol0,float vol1) {
-        WriteOut("%-8s %3.0f:%-3.0f  %+3.2f:%-+3.2f \n",name,
-            vol0*100,vol1*100,
-            20*log(vol0)/log(10.0f),20*log(vol1)/log(10.0f)
-        );
-    }
+	void ShowVolume(const char * name,float vol0,float vol1) {
+		WriteOut("%-8s %3.0f:%-3.0f  %+3.2f:%-+3.2f \n",name,
+			vol0*100,vol1*100,
+			20*log(vol0)/log(10.0f),20*log(vol1)/log(10.0f)
+		);
+	}
 
-    void ListMidi(){
-        if(midi.handler) midi.handler->ListAll(this);
-    };
+	void ListMidi(){
+		if(midi.handler) midi.handler->ListAll(this);
+	};
 
 };
 
 static void MIXER_ProgramStart(Program * * make) {
-    *make=new MIXER;
+	*make=new MIXER;
 }
 
 MixerChannel* MixerObject::Install(MIXER_Handler handler,Bitu freq,const char * name){
-    if(!installed) {
-        if(strlen(name) > 31) E_Exit("Too long mixer channel name");
-        safe_strncpy(m_name,name,32);
-        installed = true;
-        return MIXER_AddChannel(handler,freq,name);
-    } else {
-        E_Exit("already added mixer channel.");
-        return 0; //Compiler happy
-    }
+	if(!installed) {
+		if(strlen(name) > 31) E_Exit("Too long mixer channel name");
+		safe_strncpy(m_name,name,32);
+		installed = true;
+		return MIXER_AddChannel(handler,freq,name);
+	} else {
+		E_Exit("already added mixer channel.");
+		return 0; //Compiler happy
+	}
 }
 
 MixerObject::~MixerObject(){
-    if(!installed) return;
-    MIXER_DelChannel(MIXER_FindChannel(m_name));
+	if(!installed) return;
+	MIXER_DelChannel(MIXER_FindChannel(m_name));
 }
 
 
 void MIXER_Init(Section* sec) {
-    sec->AddDestroyFunction(&MIXER_Stop);
+	sec->AddDestroyFunction(&MIXER_Stop);
 
-    Section_prop * section=static_cast<Section_prop *>(sec);
-    /* Read out config section */
-    mixer.freq=section->Get_int("rate");
-    mixer.nosound=section->Get_bool("nosound");
-    mixer.blocksize=section->Get_int("blocksize");
-    mixer.mute=false;
+	Section_prop * section=static_cast<Section_prop *>(sec);
+	/* Read out config section */
+	mixer.freq=section->Get_int("rate");
+	mixer.nosound=section->Get_bool("nosound");
+	mixer.blocksize=section->Get_int("blocksize");
+	mixer.mute=false;
 
-    /* Initialize the internal stuff */
-    mixer.prebuffer_samples=0;
-    mixer.prebuffer_wait=true;
-    mixer.channels=0;
-    mixer.pos=0;
-    mixer.done=0;
-    memset(mixer.work,0,sizeof(mixer.work));
-    mixer.mastervol[0]=1.0f;
-    mixer.mastervol[1]=1.0f;
+	/* Initialize the internal stuff */
+	mixer.prebuffer_samples=0;
+	mixer.prebuffer_wait=true;
+	mixer.channels=0;
+	mixer.pos=0;
+	mixer.done=0;
+	memset(mixer.work,0,sizeof(mixer.work));
+	mixer.mastervol[0]=1.0f;
+	mixer.mastervol[1]=1.0f;
     mixer.recordvol[0]=1.0f;
     mixer.recordvol[1]=1.0f;
 
-    /* Start the Mixer using SDL Sound at 22 khz */
-    SDL_AudioSpec spec;
-    SDL_AudioSpec obtained;
+	/* Start the Mixer using SDL Sound at 22 khz */
+	SDL_AudioSpec spec;
+	SDL_AudioSpec obtained;
 
-    spec.freq=mixer.freq;
-    spec.format=AUDIO_S16SYS;
-    spec.channels=2;
-    spec.callback=MIXER_CallBack;
-    spec.userdata=NULL;
-    spec.samples=(Uint16)mixer.blocksize;
+	spec.freq=mixer.freq;
+	spec.format=AUDIO_S16SYS;
+	spec.channels=2;
+	spec.callback=MIXER_CallBack;
+	spec.userdata=NULL;
+	spec.samples=(Uint16)mixer.blocksize;
 
-    if (mixer.nosound) {
-        LOG_MSG("MIXER: No Sound Mode Selected.");
-        TIMER_AddTickHandler(MIXER_Mix);
-    } else if (SDL_OpenAudio(&spec, &obtained) <0 ) {
-        mixer.nosound = true;
-        LOG_MSG("MIXER: Can't open audio: %s , running in nosound mode.",SDL_GetError());
-        TIMER_AddTickHandler(MIXER_Mix);
-    } else {
-        if((mixer.freq != obtained.freq) || (mixer.blocksize != obtained.samples))
-            LOG_MSG("MIXER: Got different values from SDL: freq %d, blocksize %d",obtained.freq,obtained.samples);
-        mixer.freq=obtained.freq;
-        mixer.blocksize=obtained.samples;
-        TIMER_AddTickHandler(MIXER_Mix);
-        SDL_PauseAudio(0);
-    }
+	if (mixer.nosound) {
+		LOG_MSG("MIXER: No Sound Mode Selected.");
+		TIMER_AddTickHandler(MIXER_Mix);
+	} else if (SDL_OpenAudio(&spec, &obtained) <0 ) {
+		mixer.nosound = true;
+		LOG_MSG("MIXER: Can't open audio: %s , running in nosound mode.",SDL_GetError());
+		TIMER_AddTickHandler(MIXER_Mix);
+	} else {
+		if((mixer.freq != obtained.freq) || (mixer.blocksize != obtained.samples))
+			LOG_MSG("MIXER: Got different values from SDL: freq %d, blocksize %d",obtained.freq,obtained.samples);
+		mixer.freq=obtained.freq;
+		mixer.blocksize=obtained.samples;
+		TIMER_AddTickHandler(MIXER_Mix);
+		SDL_PauseAudio(0);
+	}
     mixer.work_in = mixer.work_out = 0;
     mixer.work_wrap = MIXER_BUFSIZE;
     if (mixer.work_wrap <= mixer.blocksize) E_Exit("blocksize too large");
