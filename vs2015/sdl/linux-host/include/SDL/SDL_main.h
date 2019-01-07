@@ -36,7 +36,7 @@
 
 #ifdef __cplusplus
 #define C_LINKAGE	"C"
-#define SDL_MAIN_NOEXCEPT /*noexcept(false)*/
+#define SDL_MAIN_NOEXCEPT noexcept(false)
 #else
 #define C_LINKAGE
 #define SDL_MAIN_NOEXCEPT
