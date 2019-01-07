@@ -20,6 +20,7 @@
     slouken@libsdl.org
 */
 #include "SDL_config.h"
+#include "../../main/macosx/SDLMain.h"
 
 #include "SDL_QuartzVideo.h"
 #include "SDL_QuartzWindow.h"
@@ -183,12 +184,17 @@ static int QZ_Available ()
     return 1;
 }
 
+void
+Cocoa_RegisterApp(void);
+
 static SDL_VideoDevice* QZ_CreateDevice (int device_index)
 {
 #pragma unused (device_index)
 
     SDL_VideoDevice *device;
     SDL_PrivateVideoData *hidden;
+
+    Cocoa_RegisterApp();
 
     device = (SDL_VideoDevice*) SDL_malloc (sizeof (*device) );
     hidden = (SDL_PrivateVideoData*) SDL_malloc (sizeof (*hidden) );
@@ -556,6 +562,9 @@ static inline CGError QZ_RestoreDisplayMode(_THIS)
     return QZ_SetDisplayMode(this, save_mode);
 }
 
+static bool qz_last_window_set = false;
+static NSPoint qz_last_window_pos;
+
 static void QZ_UnsetVideoMode (_THIS, BOOL to_desktop, BOOL save_gl)
 {
     /* Reset values that may change between switches */
@@ -569,6 +578,11 @@ static void QZ_UnsetVideoMode (_THIS, BOOL to_desktop, BOOL save_gl)
         CGContextFlush (cg_context);
         CGContextRelease (cg_context);
         cg_context = nil;
+    }
+
+    /* There seems to be a problem with old windows filling up the Window menu */
+    if ( qz_window != nil ) {
+        [ NSApp removeWindowsItem: qz_window ];
     }
     
     /* Release fullscreen resources */
@@ -634,6 +648,14 @@ static void QZ_UnsetVideoMode (_THIS, BOOL to_desktop, BOOL save_gl)
     }
     /* Release window mode resources */
     else {
+        {
+            /* NTS: Remember Mac OS X considers the origin the bottom left corner. */
+            NSRect r = [ qz_window frame ];
+            qz_last_window_pos.x = r.origin.x;
+            qz_last_window_pos.y = r.origin.y + r.size.height; /* convert to top left  */
+            qz_last_window_set = true;
+        }
+
         id delegate = [ qz_window delegate ];
         [ qz_window close ]; /* includes release because [qz_window isReleasedWhenClosed] */
         if (delegate != nil) [ delegate release ];
@@ -990,12 +1012,24 @@ static SDL_Surface* QZ_SetVideoWindowed (_THIS, SDL_Surface *current, int width,
     int center_window = 1;
     int origin_x, origin_y;
     CGDisplayFadeReservationToken fade_token = kCGDisplayFadeReservationInvalidToken;
+    NSPoint current_pos = NSMakePoint(0,0);
 
     current->flags = 0;
     current->w = width;
     current->h = height;
     
     contentRect = NSMakeRect (0, 0, width, height);
+
+    if (!(mode_flags & SDL_FULLSCREEN)) {
+        if (qz_window != nil) {
+            /* NTS: Remember Mac OS X considers the origin the bottom left corner. */
+            NSRect r = [ qz_window frame ];
+            current_pos.x = r.origin.x;
+            current_pos.y = r.origin.y + r.size.height; /* convert to top left  */
+            qz_last_window_set = false;
+            center_window = 0;
+        }
+    }
 
     /*
         Check if we should completely destroy the previous mode 
@@ -1013,13 +1047,19 @@ static SDL_Surface* QZ_SetVideoWindowed (_THIS, SDL_Surface *current, int width,
             }
             QZ_UnsetVideoMode (this, TRUE, save_gl);
         }
-        else if ( ((mode_flags ^ flags) & (SDL_NOFRAME|SDL_RESIZABLE)) ||
-                  (mode_flags & SDL_OPENGL) || 
-                  (flags & SDL_OPENGL) ) {
+        else if ((mode_flags ^ flags) & (SDL_NOFRAME|SDL_RESIZABLE|SDL_OPENGL)) {
             QZ_UnsetVideoMode (this, TRUE, save_gl);
         }
     }
-    
+
+    if (!(flags & SDL_FULLSCREEN)) {
+        if (qz_last_window_set) {
+            current_pos = qz_last_window_pos;
+            qz_last_window_set = false;
+            center_window = 0;
+        }
+    }
+
     /* Sorry, QuickDraw was ripped out. */
     if (getenv("SDL_NSWindowPointer") || getenv("SDL_NSQuickDrawViewPointer")) {
         SDL_SetError ("Embedded QuickDraw windows are no longer supported");
@@ -1082,6 +1122,8 @@ static SDL_Surface* QZ_SetVideoWindowed (_THIS, SDL_Surface *current, int width,
             center_window = 0;
         } else if ( center_window ) {
             [ qz_window center ];
+        } else {
+            [ qz_window setFrameTopLeftPoint: current_pos ];
         }
 
         [ qz_window setDelegate:
@@ -1098,6 +1140,9 @@ static SDL_Surface* QZ_SetVideoWindowed (_THIS, SDL_Surface *current, int width,
         [ qz_window setContentSize:contentRect.size ];
         current->flags |= (SDL_NOFRAME|SDL_RESIZABLE) & mode_flags;
         [ window_view setFrameSize:contentRect.size ];
+
+        if (!center_window)
+            [ qz_window setFrameTopLeftPoint: current_pos ];
     }
 
     /* For OpenGL, we bind the context to a subview */
@@ -1524,6 +1569,7 @@ static const unsigned char QZ_ResizeIcon[] = {
     0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x0b
 };
 
+#if 0
 static void QZ_DrawResizeIcon (_THIS)
 {
     /* Check if we should draw the resize icon */
@@ -1554,6 +1600,7 @@ static void QZ_DrawResizeIcon (_THIS)
         SDL_BlitSurface (resize_icon, NULL, SDL_VideoSurface, &icon_rect);
     }
 }
+#endif
 
 static SDL_VideoDevice *last_this = NULL;
 
@@ -1580,7 +1627,7 @@ void QZ_UpdateRectsOnDrawRect(/*TODO: NSRect from drawRect*/) {
         }
 
         CGContextRef cgc = (CGContextRef) [ctx graphicsPort];
-        QZ_DrawResizeIcon (this);
+//        QZ_DrawResizeIcon (this);
         CGContextFlush (cg_context);
         CGImageRef image = CGBitmapContextCreateImage (cg_context);
         CGRect rectangle = CGRectMake (0,0,[window_view frame].size.width,[window_view frame].size.height);

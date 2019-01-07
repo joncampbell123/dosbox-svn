@@ -127,6 +127,7 @@ struct SB_INFO {
 		Bit16s data[DSP_DACSIZE+1];
 		Bitu used;
 		Bit16s last;
+        double dac_t,dac_pt;
 	} dac;
 	struct {
 		Bit8u index;
@@ -885,11 +886,37 @@ static void DSP_DoCommand(void) {
 		}
 		break;
 	case 0x10:	/* Direct DAC */
-		DSP_ChangeMode(MODE_DAC);
-		if (sb.dac.used<DSP_DACSIZE) {
-			sb.dac.data[sb.dac.used++]=(Bit8s(sb.dsp.in.data[0] ^ 0x80)) << 8;
-			sb.dac.data[sb.dac.used++]=(Bit8s(sb.dsp.in.data[0] ^ 0x80)) << 8;
-		}
+        DSP_ChangeMode(MODE_DAC);
+
+        /* just in case something is trying to play direct DAC audio while the speaker is turned off... */
+        if (!sb.speaker)
+            LOG(LOG_SB,LOG_NORMAL)("DSP direct DAC sample written while speaker turned off. Program should use DSP command 0xD1 to turn it on.");
+
+        sb.dac.dac_pt = sb.dac.dac_t;
+        sb.dac.dac_t = PIC_FullIndex();
+        {
+            double dt = sb.dac.dac_t - sb.dac.dac_pt; // time in milliseconds since last direct DAC output
+            double rt = 1000 / dt; // estimated sample rate according to dt
+            int s,sc = 1;
+
+            // cap rate estimate to sanity. <= 1KHz means rendering once per timer tick in DOSBox,
+            // so there's no point below that rate in additional rendering.
+            if (rt < 1000) rt = 1000;
+
+            // Direct DAC playback could be thought of as application-driven 8-bit output up to 23KHz.
+            // The sound card isn't given any hint what the actual sample rate is, only that it's given
+            // instruction when to change the 8-bit value being output to the DAC which is why older DOS
+            // games using this method tend to sound "grungy" compared to DMA playback. We recreate the
+            // effect here by asking the mixer to do it's linear interpolation as if at 23KHz while
+            // rendering the audio at whatever rate the DOS game is giving it to us.
+            sb.chan->SetFreq((Bitu)(rt * 0x100),0x100);
+
+            // avoid popping/crackling artifacts through the mixer by ensuring the render output is prefilled enough
+            if (sb.chan->msbuffer_o < 40/*FIXME: ask the mixer code!*/) sc += 2/*FIXME: use mixer rate / rate math*/;
+
+            // do it
+            for (s=0;s < sc;s++) sb.chan->AddSamples_m8(1,(Bit8u*)(&sb.dsp.in.data[0]));
+        }
 		break;
 	case 0x24:	/* Singe Cycle 8-Bit DMA ADC */
 		sb.dma.left=sb.dma.total=1+sb.dsp.in.data[0]+(sb.dsp.in.data[1] << 8);
@@ -1552,13 +1579,10 @@ static void SBLASTER_CallBack(Bitu len) {
 		sb.chan->AddSilence();
 		break;
 	case MODE_DAC:
-//		GenerateDACSound(len);
-//		break;
 		if (!sb.dac.used) {
 			sb.mode=MODE_NONE;
 			return;
 		}
-		sb.chan->AddStretched(sb.dac.used,sb.dac.data);
 		sb.dac.used=0;
 		break;
 	case MODE_DMA:
@@ -1666,6 +1690,7 @@ public:
 		if (sb.type==SBT_NONE || sb.type==SBT_GB) return;
 
 		sb.chan=MixerChan.Install(&SBLASTER_CallBack,22050,"SB");
+        sb.dac.dac_pt = sb.dac.dac_t = 0;
 		sb.dsp.state=DSP_S_NORMAL;
 		sb.dsp.out.lastval=0xaa;
 		sb.dma.chan=NULL;

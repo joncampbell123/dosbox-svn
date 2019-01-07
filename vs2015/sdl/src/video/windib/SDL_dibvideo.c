@@ -535,6 +535,9 @@ void sdl1_hax_set_topmost(unsigned char topmost) {
 /* Various screen update functions available */
 static void DIB_NormalUpdate(_THIS, int numrects, SDL_Rect *rects);
 
+static unsigned char saved_winpos_valid = 0;
+static POINT saved_winpos;
+
 static void DIB_ResizeWindow(_THIS, int width, int height, int prev_width, int prev_height, Uint32 flags)
 {
 #if defined(SDL_WIN32_HX_DOS)
@@ -595,9 +598,13 @@ static void DIB_ResizeWindow(_THIS, int width, int height, int prev_width, int p
 		} else if ( center ) {
 			x = (GetSystemMetrics(SM_CXSCREEN)-width)/2;
 			y = (GetSystemMetrics(SM_CYSCREEN)-height)/2;
-		} else if ( SDL_windowX || SDL_windowY || window ) {
-			x = bounds.left;
-			y = bounds.top;
+        } else if ( SDL_windowX || SDL_windowY || window ) {
+            x = bounds.left;
+            y = bounds.top;
+        } else if (saved_winpos_valid) { /* coming from fullscreen for example */
+            saved_winpos_valid = 0;
+            x = saved_winpos.x;
+            y = saved_winpos.y;
 		} else {
 			x = y = -1;
 			swp_flags |= SWP_NOMOVE;
@@ -613,11 +620,10 @@ static void DIB_ResizeWindow(_THIS, int width, int height, int prev_width, int p
 #endif
 
 #ifndef SDL_WIN32_NO_PARENT_WINDOW
-		if (SDL_VideoSurface != NULL)
+        if (SDL_VideoSurface != NULL)
 			SetWindowPos(SDL_Window, HWND_TOP, 0, 0, SDL_VideoSurface->w, SDL_VideoSurface->h, SWP_NOACTIVATE | SWP_SHOWWINDOW);
 
-		EnterCriticalSection(&ParentWindowCritSec);
-
+        EnterCriticalSection(&ParentWindowCritSec);
 		/* Windows 10 has developed a strange deadlock that can happen if the user is resizing the parent window
 		   and we call SetWindowPos() to confirm the size here. Use SWP_NOMOVE just in case that's problematic too. */
 		if (ParentWindowIsBeingResized) {
@@ -629,8 +635,7 @@ static void DIB_ResizeWindow(_THIS, int width, int height, int prev_width, int p
 			/* tell SetWindowPos() not to move or resize */
 			swp_flags |= SWP_NOSIZE | SWP_NOMOVE;
 		}
-
-		LeaveCriticalSection(&ParentWindowCritSec);
+        LeaveCriticalSection(&ParentWindowCritSec);
 
 		SetWindowPos(ParentWindowHWND, top, x, y, width, height, swp_flags);
 #else
@@ -687,6 +692,20 @@ SDL_Surface *DIB_SetVideoMode(_THIS, SDL_Surface *current,
 	BITMAPINFO *binfo;
 	HDC hdc;
 	Uint32 Rmask, Gmask, Bmask;
+
+    /* save window position if going into fullscreen mode */
+    if (!(current->flags & SDL_FULLSCREEN) && (flags & SDL_FULLSCREEN)) {
+        RECT r;
+
+#ifndef SDL_WIN32_NO_PARENT_WINDOW
+        GetWindowRect(ParentWindowHWND, &r);
+#else
+        GetWindowRect(SDL_Window, &r);
+#endif
+        saved_winpos_valid = 1;
+        saved_winpos.x = r.left;
+        saved_winpos.y = r.top;
+    }
 
 	prev_w = current->w;
 	prev_h = current->h;
