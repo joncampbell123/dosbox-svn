@@ -371,3 +371,5 @@ typedef         double     Real64;
 /* Linux-side configure script will write/rewrite this file so both Windows and Linux builds carry the same information --J.C. */
 //#include "config_package.h"
 
+// SVN compat
+#define VERSION "SVN"

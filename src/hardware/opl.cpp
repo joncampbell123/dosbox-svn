@@ -26,6 +26,7 @@
 
 
 #include <math.h>
+#include <string.h>
 #include <stdlib.h> // rand()
 #include "dosbox.h"
 #include "opl.h"
