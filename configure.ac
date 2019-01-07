@@ -11,6 +11,51 @@ dnl Setup for automake
 AM_INIT_AUTOMAKE
 AC_CONFIG_HEADER(config.h)
 
+dnl Utility function ============================
+
+# AC_CHECK_CPPFLAGS(ADDITIONAL-CPPFLAGS, ACTION-IF-FOUND, ACTION-IF-NOT-FOUND)
+#
+# checks whether the $(C) compiler accepts the ADDITIONAL-CPPFLAGS
+# if so, they are added to the CPPFLAGS
+AC_DEFUN([AC_CHECK_CPPFLAGS],
+[
+  AC_MSG_CHECKING([whether $CPP accepts "$1"])
+  temp_check_cppflags="${CPPFLAGS}"
+  CPPFLAGS="$1 ${CPPFLAGS}"
+  AC_PREPROC_IFELSE(
+        [AC_LANG_SOURCE([[int main(void){return 0;}]])],
+        [AC_MSG_RESULT([yes])],
+        [AC_MSG_RESULT([no]); CPPFLAGS="${temp_check_cppflags}"])
+])# AC_CHECK_CPPFLAGS
+
+dnl Utility function ============================
+
+# AC_CHECK_CXXFLAGS(ADDITIONAL-CXXFLAGS, ACTION-IF-FOUND, ACTION-IF-NOT-FOUND)
+#
+# checks whether the $(CXX) (c++) compiler accepts the ADDITIONAL-CXXFLAGS
+# if so, they are added to the CXXFLAGS
+AC_DEFUN([AC_CHECK_CXXFLAGS],
+[
+  AC_MSG_CHECKING([whether $CXX accepts "$1"])
+cat > conftest.c++ << EOF
+int main(){
+  return 0;
+}
+EOF
+if $CXX $CPPFLAGS $CXXFLAGS -o conftest.o conftest.c++ [$1] > /dev/null 2>&1
+then
+  AC_MSG_RESULT([yes])
+  CXXFLAGS="${CXXFLAGS} [$1]"
+  AC_CHECK_CPPFLAGS([$1])
+  [$2]
+else
+  AC_MSG_RESULT([no])
+  [$3]
+fi
+])# AC_CHECK_CXXFLAGS
+
+dnl End utility function ============================
+
 dnl Checks for programs.
 AC_PROG_MAKE_SET
 AC_PROG_CC
@@ -48,6 +93,13 @@ void blah(){
 ])],AC_MSG_RESULT([yes]),[
  AC_MSG_RESULT([no]) 
  AC_MSG_ERROR([Only libSDL 1.2.X supported])])
+
+checkagain=1
+AC_MSG_CHECKING([checking for C++11 support])
+AC_CHECK_CXXFLAGS([ -std=gnu++11 ], [ checkagain=0 ], [ checkagain=1 ])
+if test x$checkagain = x1; then
+AC_CHECK_CXXFLAGS([ -std=gnu++0x ], [ checkagain=0 ], [ checkagain=1 ])
+fi
 
 dnl Checks for header files.
 
