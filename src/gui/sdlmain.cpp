@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2002-2018  The DOSBox Team
+ *  Copyright (C) 2002-2019  The DOSBox Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -11,9 +11,9 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
 
@@ -234,7 +234,7 @@ SDL_Surface* SDL_SetVideoMode_Wrap(int width,int height,int bpp,Bit32u flags){
 		// I don't see a difference, so disabled for now, as the code isn't finished either
 #if SETMODE_SAVES_CLEAR
 		//TODO clear it.
-#ifdef C_OPENGL
+#if C_OPENGL
 		if ((flags & SDL_OPENGL)==0)
 			SDL_FillRect(sdl.surface,NULL,SDL_MapRGB(sdl.surface->format,0,0,0));
 		else {
@@ -309,7 +309,7 @@ static void GFX_SetIcon() {
 	/* Set Icon (must be done before any sdl_setvideomode call) */
 	/* But don't set it on OS X, as we use a nicer external icon there. */
 	/* Made into a separate call, so it can be called again when we restart the graphics output on win32 */
-#if WORDS_BIGENDIAN
+#ifdef WORDS_BIGENDIAN
 	SDL_Surface* logos= SDL_CreateRGBSurfaceFrom((void*)logo,32,32,32,128,0xff000000,0x00ff0000,0x0000ff00,0);
 #else
 	SDL_Surface* logos= SDL_CreateRGBSurfaceFrom((void*)logo,32,32,32,128,0x000000ff,0x0000ff00,0x00ff0000,0);
@@ -2022,7 +2022,7 @@ int main(int argc, char* argv[]) {
 #endif  //defined(WIN32) && !(C_DEBUG)
 		if (control->cmdline->FindExist("-version") ||
 		    control->cmdline->FindExist("--version") ) {
-			printf("\nDOSBox version %s, copyright 2002-2018 DOSBox Team.\n\n",VERSION);
+			printf("\nDOSBox version %s, copyright 2002-2019 DOSBox Team.\n\n",VERSION);
 			printf("DOSBox is written by the DOSBox Team (See AUTHORS file))\n");
 			printf("DOSBox comes with ABSOLUTELY NO WARRANTY.  This is free software,\n");
 			printf("and you are welcome to redistribute it under certain conditions;\n");
@@ -2050,7 +2050,7 @@ int main(int argc, char* argv[]) {
 
 	/* Display Welcometext in the console */
 	LOG_MSG("DOSBox version %s",VERSION);
-	LOG_MSG("Copyright 2002-2018 DOSBox Team, published under GNU GPL.");
+	LOG_MSG("Copyright 2002-2019 DOSBox Team, published under GNU GPL.");
 	LOG_MSG("---");
 
 	/* Init SDL */
