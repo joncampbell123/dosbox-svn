@@ -905,6 +905,12 @@ static Bitu INT15_Handler(void) {
 			reg_bx=0x00aa;	// mouse
 			// fall through
 		case 0x05:		// initialize
+			if ((reg_al==0x05) && (reg_bh!=0x03)) {
+				// non-standard data packet sizes not supported
+				CALLBACK_SCF(true);
+				reg_ah=2;
+				break;
+			}
 			Mouse_SetPS2State(false);
 			CALLBACK_SCF(false);
 			reg_ah=0;
@@ -1284,6 +1290,7 @@ public:
 		// Gameport
 		config |= 0x1000;
 		mem_writew(BIOS_CONFIGURATION,config);
+		if (IS_EGAVGA_ARCH) config &= ~0x30; //EGA/VGA startup display mode differs in CMOS
 		CMOS_SetRegister(0x14,(Bit8u)(config&0xff)); //Should be updated on changes
 		/* Setup extended memory size */
 		IO_Write(0x70,0x30);
@@ -1338,6 +1345,7 @@ void BIOS_SetComPorts(Bit16u baseaddr[]) {
 	equipmentword &= (~0x0E00);
 	equipmentword |= (portcount << 9);
 	mem_writew(BIOS_CONFIGURATION,equipmentword);
+	if (IS_EGAVGA_ARCH) equipmentword &= ~0x30; //EGA/VGA startup display mode differs in CMOS
 	CMOS_SetRegister(0x14,(Bit8u)(equipmentword&0xff)); //Should be updated on changes
 }
 
