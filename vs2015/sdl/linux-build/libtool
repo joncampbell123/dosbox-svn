@@ -240,7 +240,7 @@ finish_eval=""
 hardcode_into_libs=yes
 
 # Compile-time system search path for libraries.
-sys_lib_search_path_spec="/usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3 /usr/x86_64-pc-linux-gnu/lib64 /usr/lib64 /lib64"
+sys_lib_search_path_spec="/usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5 /usr/x86_64-pc-linux-gnu/lib64 /usr/lib64 /lib64"
 
 # Run-time system search path for libraries.
 sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/gcc-4.9/lib64 /usr/gcc-4.9/lib /usr/gcc-4.8/lib64 /usr/gcc-4.8/lib /usr/lib64 /usr/lib /lib64 /lib usr/lib64/blackmagic usr/lib/blackmagic "
@@ -9047,17 +9047,17 @@ file_list_spec=""
 hardcode_action=immediate
 
 # The directories searched by this compiler when creating a shared library.
-compiler_lib_search_dirs="/usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3 /usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../../../x86_64-pc-linux-gnu/lib/../lib64 /usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../../../lib64 /lib/../lib64 /usr/lib/../lib64 /usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../../../x86_64-pc-linux-gnu/lib /usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../.."
+compiler_lib_search_dirs="/usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5 /usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../../../x86_64-pc-linux-gnu/lib/../lib64 /usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../../../lib64 /lib/../lib64 /usr/lib/../lib64 /usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../../../x86_64-pc-linux-gnu/lib /usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../.."
 
 # Dependencies to place before and after the objects being linked to
 # create a shared library.
-predep_objects="/usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../../../lib64/crti.o /usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/crtbeginS.o"
-postdep_objects="/usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/crtendS.o /usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../../../lib64/crtn.o"
+predep_objects="/usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../../../lib64/crti.o /usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/crtbeginS.o"
+postdep_objects="/usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/crtendS.o /usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../../../lib64/crtn.o"
 predeps=""
 postdeps="-lstdc++ -lm -lgcc_s -lc -lgcc_s"
 
 # The library search path used internally by the compiler when linking
 # a shared library.
-compiler_lib_search_path="-L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3 -L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../../../x86_64-pc-linux-gnu/lib/../lib64 -L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.6.3/../../.."
+compiler_lib_search_path="-L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5 -L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../../../x86_64-pc-linux-gnu/lib/../lib64 -L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib64/gcc/x86_64-pc-linux-gnu/4.8.5/../../.."
 
 # ### END LIBTOOL TAG CONFIG: CXX
