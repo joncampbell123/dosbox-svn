@@ -1013,14 +1013,7 @@ void GFX_EndUpdate( const Bit16u *changedLines ) {
 			glBindTexture(GL_TEXTURE_2D, sdl.opengl.texture);
 			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0,
 					sdl.draw.width, sdl.draw.height, GL_BGRA_EXT,
-#if defined (MACOSX)
-                    // needed for proper looking graphics on macOS 10.12, 10.13
-                    GL_UNSIGNED_INT_8_8_8_8,
-#else
-                    // works on Linux
-                    GL_UNSIGNED_INT_8_8_8_8_REV,
-#endif
-                    0);
+					GL_UNSIGNED_INT_8_8_8_8_REV, 0);
 			glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_EXT, 0);
 			glCallList(sdl.opengl.displaylist);
 			SDL_GL_SwapBuffers();
@@ -1035,14 +1028,7 @@ void GFX_EndUpdate( const Bit16u *changedLines ) {
 					Bitu height = changedLines[index];
 					glTexSubImage2D(GL_TEXTURE_2D, 0, 0, y,
 						sdl.draw.width, height, GL_BGRA_EXT,
-#if defined (MACOSX)
-                        // needed for proper looking graphics on macOS 10.12, 10.13
-                        GL_UNSIGNED_INT_8_8_8_8,
-#else
-                        // works on Linux
-                        GL_UNSIGNED_INT_8_8_8_8_REV,
-#endif
-                        pixels );
+						GL_UNSIGNED_INT_8_8_8_8_REV, pixels );
 					y += height;
 				}
 				index++;
@@ -1088,13 +1074,9 @@ Bitu GFX_GetRGB(Bit8u red,Bit8u green,Bit8u blue) {
 #endif
 		}
 	case SCREEN_OPENGL:
-# if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
-        //USE BGRA
-		return ((blue << 24) | (green << 16) | (red << 8)) | (255 << 0);
-# else
-		//USE ARGB
+//		return ((red << 0) | (green << 8) | (blue << 16)) | (255 << 24);
+		//USE BGRA
 		return ((blue << 0) | (green << 8) | (red << 16)) | (255 << 24);
-# endif
 	}
 	return 0;
 }

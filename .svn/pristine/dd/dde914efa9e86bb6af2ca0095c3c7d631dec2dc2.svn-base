@@ -412,7 +412,6 @@ void INT10_SetCurMode(void) {
 			if (bios_mode!=7 && bios_mode<=0xa) mode_changed=SetCurMode(ModeList_OTHER,bios_mode);
 			break;
 		case MCH_HERC:
-        case MCH_MDA:
 			if (bios_mode<7) mode_changed=SetCurMode(ModeList_OTHER,bios_mode);
 			else if (bios_mode==7) {mode_changed=true;CurMode=&Hercules_Mode;}
 			break;
@@ -526,7 +525,6 @@ bool INT10_SetVideoMode_OTHER(Bit16u mode,bool clearmem) {
 		}
 		break;
 	case MCH_HERC:
-	case MCH_MDA:
 		// Allow standard color modes if equipment word is not set to mono (Victory Road)
 		if ((real_readw(BIOSMEM_SEG,BIOSMEM_INITIAL_MODE)&0x30)!=0x30 && mode<7) {
 			SetCurMode(ModeList_OTHER,mode);
@@ -542,7 +540,7 @@ bool INT10_SetVideoMode_OTHER(Bit16u mode,bool clearmem) {
 	/* Setup the VGA to the correct mode */
 //	VGA_SetMode(CurMode->type);
 	/* Setup the CRTC */
-	Bitu crtc_base=(machine==MCH_HERC || machine==MCH_MDA) ? 0x3b4 : 0x3d4;
+	Bitu crtc_base=machine==MCH_HERC ? 0x3b4 : 0x3d4;
 	//Horizontal total
 	IO_WriteW(crtc_base,0x00 | (CurMode->htotal) << 8);
 	//Horizontal displayed
@@ -564,7 +562,7 @@ bool INT10_SetVideoMode_OTHER(Bit16u mode,bool clearmem) {
 	scanline=8;
 	switch(CurMode->type) {
 	case M_TEXT:
-		if (machine==MCH_HERC || machine==MCH_MDA) scanline=14;
+		if (machine==MCH_HERC) scanline=14;
 		else scanline=8;
 		break;
 	case M_CGA2:
@@ -598,7 +596,6 @@ bool INT10_SetVideoMode_OTHER(Bit16u mode,bool clearmem) {
 	Bit8u mode_control,color_select;
 	switch (machine) {
 	case MCH_HERC:
-    case MCH_MDA:
 		IO_WriteB(0x3b8,0x28);	// TEXT mode and blinking characters
 
 		Herc_Palette();
