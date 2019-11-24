@@ -164,16 +164,6 @@ static Bit8u * VGA_Draw_Changes_Line(Bitu vidstart, Bitu line) {
 
 #endif
 
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
-static inline Bit32u guest_bgr_to_macosx_rgba(const Bit32u x) {
-    /* guest: XRGB      X   R   G   B
-     * host:  RGBX      B   G   R   X */
-    return      ((x & 0x000000FFU) << 24U) +      /* BBxxxxxx */
-                ((x & 0x0000FF00U) <<  8U) +      /* xxGGxxxx */
-                ((x & 0x00FF0000U) >>  8U);       /* xxxxRRxx */
-}
-#endif
-
 static Bit8u * VGA_Draw_Linear_Line(Bitu vidstart, Bitu /*line*/) {
 	Bitu offset = vidstart & vga.draw.linear_mask;
 	Bit8u* ret = &vga.draw.linear_base[offset];
@@ -339,15 +329,6 @@ static Bit8u * VGA_Draw_LIN16_Line_HWMouse(Bitu vidstart, Bitu /*line*/) {
 }
 
 static Bit8u * VGA_Draw_LIN32_Line_HWMouse(Bitu vidstart, Bitu /*line*/) {
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
-    Bitu offset = vidstart & vga.draw.linear_mask;
-    Bitu i;
-
-    for (i=0;i < vga.draw.width;i++)
-        ((Bit32u*)TempLine)[i] = guest_bgr_to_macosx_rgba((((Bit32u*)(vga.draw.linear_base+offset))[i]));
-
-    return TempLine;
-#else
 	if (!svga.hardware_cursor_active || !svga.hardware_cursor_active())
 		return &vga.mem.linear[vidstart];
 
@@ -383,7 +364,6 @@ static Bit8u * VGA_Draw_LIN32_Line_HWMouse(Bitu vidstart, Bitu /*line*/) {
 		}
 		return TempLine;
 	}
-#endif
 }
 
 static const Bit8u* VGA_Text_Memwrap(Bitu vidstart) {
@@ -833,7 +813,6 @@ static void VGA_VerticalTimer(Bitu /*val*/) {
 		PIC_AddEvent(VGA_Other_VertInterrupt, (float)vga.draw.delay.vrend, 0);
 		// fall-through
 	case MCH_CGA:
-    case MCH_MDA:
 	case MCH_HERC:
 		// MC6845-powered graphics: Loading the display start latch happens somewhere
 		// after vsync off and before first visible scanline, so probably here
@@ -918,7 +897,7 @@ static void VGA_VerticalTimer(Bitu /*val*/) {
 		// fall-through
 	case M_TANDY_TEXT:
 	case M_HERC_TEXT:
-		if (machine==MCH_HERC || machine==MCH_MDA) vga.draw.linear_mask = 0xfff; // 1 page
+		if (machine==MCH_HERC) vga.draw.linear_mask = 0xfff; // 1 page
 		else if (IS_EGAVGA_ARCH) vga.draw.linear_mask = 0x7fff; // 8 pages
 		else vga.draw.linear_mask = 0x3fff; // CGA, Tandy 4 pages
 		vga.draw.cursor.address=vga.config.cursor_start*2;
@@ -1047,16 +1026,8 @@ void VGA_ActivateHardwareCursor(void) {
 			VGA_DrawLine=VGA_Draw_VGA_Line_HWMouse;
 		}
 	} else {
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
-        if (vga.mode == M_LIN32) {
-            VGA_DrawLine=VGA_Draw_LIN32_Line_HWMouse;
-        }
-        else
-#endif
-        {
-            VGA_DrawLine=VGA_Draw_Linear_Line;
-        }
-    }
+		VGA_DrawLine=VGA_Draw_Linear_Line;
+	}
 }
 
 void VGA_SetupDrawing(Bitu /*val*/) {
@@ -1209,7 +1180,6 @@ void VGA_SetupDrawing(Bitu /*val*/) {
 		case TANDY_ARCH_CASE:
 			clock=((vga.tandy.mode_control & 1) ? 14318180 : (14318180/2))/8;
 			break;
-        case MCH_MDA:
 		case MCH_HERC:
 			if (vga.herc.mode_control & 0x2) clock=16000000/16;
 			else clock=16000000/8;

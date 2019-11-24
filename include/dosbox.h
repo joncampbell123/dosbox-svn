@@ -46,9 +46,7 @@ enum MachineType {
 	MCH_TANDY,
 	MCH_PCJR,
 	MCH_EGA,
-	MCH_VGA,
-
-    MCH_MDA
+	MCH_VGA
 };
 
 enum SVGACards {

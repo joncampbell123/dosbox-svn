@@ -99,11 +99,7 @@
 #elif DBPP == 16
 #define PMAKE(_VAL) (((_VAL) & 31) | ((_VAL) & ~31) << 1)
 #elif DBPP == 32
-# if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
-#  define PMAKE(_VAL)  (((_VAL&(31u<<10u))<<1u)|((_VAL&(31u<<5u))<<14u)|((_VAL&31u)<<27u))
-# else
-#  define PMAKE(_VAL)  (((_VAL&(31u<<10u))<<9u)|((_VAL&(31u<<5u))<<6u)|((_VAL&31u)<<3u))
-# endif
+#define PMAKE(_VAL)  (((_VAL&(31<<10))<<9)|((_VAL&(31<<5))<<6)|((_VAL&31)<<3))
 #endif
 #define SRCTYPE Bit16u
 #endif
@@ -111,15 +107,11 @@
 #if SBPP == 16
 #define SC scalerSourceCache.b16
 #if DBPP == 15
-#define PMAKE(_VAL) (((_VAL&~31u)>>1u)|(_VAL&31u))
+#define PMAKE(_VAL) (((_VAL&~31)>>1)|(_VAL&31))
 #elif DBPP == 16
 #define PMAKE(_VAL) (_VAL)
 #elif DBPP == 32
-# if SDL_BYTEORDER == SDL_LIL_ENDIAN && defined(MACOSX) /* Mac OS X Intel builds use a weird RGBA order (alpha in the low 8 bits) */
-#  define PMAKE(_VAL)  (((_VAL&(31u<<11u))<<0u)|((_VAL&(63u<<5u))<<13u)|((_VAL&31u)<<27u))
-# else
-#  define PMAKE(_VAL)  (((_VAL&(31u<<11u))<<8u)|((_VAL&(63u<<5u))<<5u)|((_VAL&31u)<<3u))
-# endif
+#define PMAKE(_VAL)  (((_VAL&(31<<11))<<8)|((_VAL&(63<<5))<<5)|((_VAL&31)<<3))
 #endif
 #define SRCTYPE Bit16u
 #endif

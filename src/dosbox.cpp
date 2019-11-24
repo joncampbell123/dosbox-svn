@@ -368,7 +368,6 @@ static void DOSBOX_RealInit(Section * sec) {
 	else if (mtype == "tandy")    { machine = MCH_TANDY; }
 	else if (mtype == "pcjr")     { machine = MCH_PCJR; }
 	else if (mtype == "hercules") { machine = MCH_HERC; }
-	else if (mtype == "mda")      { machine = MCH_MDA; }
 	else if (mtype == "ega")      { machine = MCH_EGA; }
 //	else if (mtype == "vga")          { svgaCard = SVGA_S3Trio; }
 	else if (mtype == "svga_s3")       { svgaCard = SVGA_S3Trio; }
