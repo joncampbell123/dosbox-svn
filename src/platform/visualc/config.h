@@ -43,6 +43,11 @@
 /* Enable the FPU module, still only for beta testing */
 #define C_FPU 1
 
+/* Enable MMX instruction set */
+#if C_FPU
+#define C_MMX 1
+#endif
+
 /* Define to 1 to use a x86 assembly fpu core */
 #ifdef _M_X64
 //No support for inline asm with visual studio in x64 bit mode.
