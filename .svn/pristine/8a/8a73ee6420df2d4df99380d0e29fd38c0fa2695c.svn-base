@@ -204,9 +204,6 @@
 					RelativePath="..\src\cpu\modrm.cpp">
 				</File>
 				<File
-					RelativePath="..\src\cpu\mmx.h">
-				</File>
-				<File
 					RelativePath="..\src\cpu\modrm.h">
 				</File>
 				<File
@@ -220,9 +217,6 @@
 					</File>
 					<File
 						RelativePath="..\src\cpu\core_normal\prefix_0f.h">
-					</File>
-					<File
-						RelativePath="..\src\cpu\core_normal\prefix_0f_mmx.h">
 					</File>
 					<File
 						RelativePath="..\src\cpu\core_normal\prefix_66.h">
@@ -864,9 +858,6 @@
 			</File>
 			<File
 				RelativePath="..\include\mem.h">
-			</File>
-			<File
-				RelativePath="..\include\mmx.h">
 			</File>
 			<File
 				RelativePath="..\include\midi.h">
